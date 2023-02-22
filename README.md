@@ -1,4 +1,4 @@
-# CMTA FA2 Blueprint Implementation
+# CMTAT implementation for Tezos
 
 The [Capital Markets and Technology Association](https://www.cmta.ch/)
 (CMTA) has published [a
@@ -24,6 +24,7 @@ This allows for batched operations.
 *Warning:* Unless you know for certain that all tokens handled by the contract have to be destroyed in case of a “kill”, we recommend deploying/originating one contract per token.
 
 ## Glossary
+
  - Owner (CMTAT):        the administrator of a specific token_id (one per token_id).
  - Holder (CMTAT):       the token holder (n per token_id). In our context the actual shareholder.
  - Super Administrator:   the administrator that can create new assets and/or kill the entire contract.
@@ -34,7 +35,7 @@ This allows for batched operations.
 
 ## Functionality
 
-### Token Metadata
+### Token metadata
 
 We follow the FA2 standard for the metadata specification. The TZIP-16
 standard allows to extend the metadata with arbitrary fields. As per
@@ -67,13 +68,13 @@ Optional attributes, applicable to tokens used for debt securities:
 
 You can find a sample token metadata in the metadata folder. Once uploaded to either a static URL or IPFS you can simply convert the UTF8 string of the URI to bytes and set said bytes in the `set_token_metadata` entry point. 
 
-### Rule Engine
+### Rule engine
 
 This reference implementation can either be extended/adapted by code. Or another option if the customization is only on the transferrability you can implement and set a `rule_contract`. If a rule contract is set, it needs to provide a `view_is_transfer_valid(transfer: ValidationTransfer)` on-chain view which returns a bool, this view will be invoked on transfer, if it passes (returns true) the transfer will go through, if it fails (returns false) the transfer is rolled back.
 
 The rule engine can be used for use cases like freezing or KYC/DID checks.
 
-#### Freezing/Unfreezing of accounts
+#### Freezing/unfreezing of accounts
 
 CMTA has in the specifications the ability to freeze/unfreeze accounts. Frozen accounts won't be allowed to send or receive tokens. Because the rule engine is the perfect candidate to handle this, instead of creating the reference implementation inside the `CMTAFA2` contract we provide a reference implementation of a freeze rule engine called `FreezeRuleEngine`. The tests show how this can be used.
 
@@ -85,7 +86,8 @@ The admin of a specific token can schedule 1 snapshot for the future (for that t
 
 On chain, you can check the snapshot values by consuming the views `view_snapshot_total_supply` and `view_snapshot_balance_of`.
 
-## entry points
+## Entry points
+
 ### `transfer(self, transfers)`
 
 Slightly adapted FA2 transfer method which includes pause, rule engine and snapshot functionality.
@@ -187,7 +189,7 @@ Given the snapshot ledger key (consisting of token_id = sp.TNat, owner = sp.TAdd
 
 Given the snapshot lookup key (consisting of token_id = sp.TNat, snapshot_timestamp = sp.TTimestamp) allows the consumer to retrieve the total supply in nat of a given snapshot.
 
-## Build/Basic Usage
+## Build and basic usage
 
 ### Dependencies
 
