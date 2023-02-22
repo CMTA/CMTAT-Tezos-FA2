@@ -23,6 +23,19 @@ This allows for batched operations.
 
 *Warning:* Unless you know for certain that all tokens handled by the contract have to be destroyed in case of a “kill”, we recommend deploying/originating one contract per token.
 
+## Security audit
+
+The token implementation was audited by [Inference](https://inference.ag),
+and the report is available under [doc/](./doc).
+
+The security audit target was commit
+[90c94a](https://github.com/airgap-it/CMTAT-FA2/commit/90c94a3ad5abba0c3a4f62c3bb25dd9e541581a6)
+in the original repository of the token.
+Subsequent commits did not change the code, but only the documentation.
+The code in release 1.0 is unchanged compared to the code in the version
+audited.
+
+
 ## Glossary
 
  - Owner (CMTAT):        the administrator of a specific token_id (one per token_id).
