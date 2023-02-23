@@ -9,19 +9,18 @@ Token, CMTAT), for which a reference implementation in Solidity [is
 available](https://github.com/CMTA/CMTAT). 
 
 The present repository provides an implementation of the CMTAT standard
-for the Tezos ecosystem, based on the [FA2 token
+for the Tezos ecosystem, which has been developed by the Tezos Foundation and is based on the [FA2 token
 standard](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-12/).
 There are two main differences compared to the Solidity reference
 contract:
 
-- FA2 allows for multiple tokens on the same contract. This of course means that we can have per token
-an admin who gets the token 'owner' status as per CMTAT. Since 'owner' in FA2 receives another semantic
- we a use the expression 'token admin' to relate to the 'CMTAT token owner' and 'token owners' for us
+- FA2 allows for multiple tokens on the same contract. This of course means that this implementation can have per token
+an admin who gets the token 'owner' status as per CMTAT. Since 'owner' in FA2 receives another semantic. This implementation uses the expression 'token admin' to refer to the 'CMTAT token owner' and 'token owners' in this implementation
  are what CMTAT calls 'holders'.
 - For gas optimization purposes where it makes sense the entry points have been extended to accept lists. 
 This allows for batched operations. 
 
-*Warning:* Unless you know for certain that all tokens handled by the contract have to be destroyed in case of a “kill”, we recommend deploying/originating one contract per token.
+*Warning:* Unless you know for certain that all tokens handled by the contract have to be destroyed in case of a “kill”, it is recommended to deploy one contract per token.
 
 ## Security audit
 
@@ -39,20 +38,20 @@ audited.
 ## Glossary
 
  - Owner (CMTAT):        the administrator of a specific token_id (one per token_id).
- - Holder (CMTAT):       the token holder (n per token_id). In our context the actual shareholder.
+ - Holder (CMTAT):       the token holder (n per token_id). In this context the actual shareholder.
  - Super Administrator:   the administrator that can create new assets and/or kill the entire contract.
  - Administrator:         the administrator of a specific token_id (one per token_id).
- - Owner:                 the token holder (n per token_id). In our context the actual shareholder.
+ - Owner:                 the token holder (n per token_id). In this context the actual shareholder.
  - Batch:                 allow for multiple changes/executions in one method call. Will always fail for all requests (and revert) in case a single one fails.
- - Plurals:               plurals are used in the variable name to signal a list. If the plural does not make sense, we choose the _list postfix. 
+ - Plurals:               plurals are used in the variable name to signal a list. If the plural does not make sense, the _list postfix is chosen. 
 
 ## Functionality
 
 ### Token metadata
 
-We follow the FA2 standard for the metadata specification. The TZIP-16
+This implementation follows the FA2 standard for the metadata specification. The TZIP-16
 standard allows to extend the metadata with arbitrary fields. As per
-CMTAT we are using the following mapping.
+CMTAT, this implementation uses the following mapping.
 
 Mandatory attributes, applicable to all CMTAT tokens:
 
